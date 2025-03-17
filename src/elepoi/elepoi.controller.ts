@@ -1,6 +1,7 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { ElepoiService } from "./elepoi.service";
-import { elepoi } from "./elepoi.entity";
+import { Elepoi } from "./elepoi.entity";
+import { ElepoiNearbyDto } from "./elepoi-nearby-dto";
 
 @Controller("elepoi")
 export class ElepoiController {
@@ -8,15 +9,15 @@ export class ElepoiController {
 
 
     @Get()
-    async findAll(): Promise<elepoi[]>{
+    async findAll(): Promise<Elepoi[]>{
         return this.elepoiService.findAll();
     }
 
 
-//     @Get('nearby')
-//   async findNearby(@Query() query: BldgNearbyDto): Promise<Bldg[]> {
-//     return this.bldgService.findNearby(query.x, query.y, query.radius);
-//   }
+    @Get('nearby')
+    async findNearby(@Query() query: ElepoiNearbyDto): Promise<Elepoi[]> {
+    return this.elepoiService.findNearby(query.x, query.y, query.radius);
+  }
 
 
 }
